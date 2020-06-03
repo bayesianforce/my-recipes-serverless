@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "updateProfile",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^(?!\\s*$)."
+    },
+    "isComplete": {
+      "type": "boolean"
+    }
+  },
+  "required": ["name", "isComplete"],
+  "additionalProperties": false
+}

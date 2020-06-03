@@ -1,5 +1,5 @@
 service:
-  name: image-sharing
+  name: vabar-sharing
 
 plugins:
   - serverless-webpack
@@ -13,9 +13,12 @@ custom:
     api:
       info:
         version: v1.0.0
-        title: Serveless Todo API
-        description: Serverless application for images sharing
+        title: vabar App
+        description: Vabar application for sharing
     models:
+      - name: UpdateProfileRequest
+        contentType: application/json
+        schema: ${file(models/update-profile-request.json)}
       - name: CreateTodoRequest
         contentType: application/json
         schema: ${file(models/create-todo-request.json)}
@@ -25,7 +28,7 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs10.x
+  runtime: nodejs12.x
 
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-1'}
@@ -35,14 +38,82 @@ provider:
     apiGateway: true
 
   environment:
-    TODO_TABLE: Serveless-vabar-todo-${self:provider.stage}
-    IMAGES_S3_BUCKET: serveless-vabar-img-${self:provider.stage}
+    PROFILE_TABLE: Vabar-profile-${self:provider.stage}
+    TODO_TABLE: Vabar-todo-${self:provider.stage}
+    IMAGES_S3_BUCKET: vabar-img-${self:provider.stage}
     USER_ID_INDEX: UserIdIndex
     SIGNED_URL_EXPIRATION: 300
 
 functions:
   Auth:
     handler: src/lambda/auth/auth0Authorizer.handler
+
+  GetProfile:
+    handler: src/lambda/http/getProfile.handler
+    events:
+      - http:
+          method: get
+          path: profile
+          cors: true
+          authorizer: Auth
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.PROFILE_TABLE}
+      - Effect: 'Allow'
+        Action:
+          - 'xray:PutTraceSegments'
+          - 'xray:PutTelemetryRecords'
+        Resource:
+          - '*'
+
+  CreateProfile:
+    handler: src/lambda/http/createProfile.handler
+    events:
+      - http:
+          method: post
+          path: profile
+          cors: true
+          authorizer: Auth
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.PROFILE_TABLE}
+      - Effect: 'Allow'
+        Action:
+          - 'xray:PutTraceSegments'
+          - 'xray:PutTelemetryRecords'
+        Resource:
+          - '*'
+
+  UpdateProfile:
+    handler: src/lambda/http/updateProfile.handler
+    events:
+      - http:
+          method: patch
+          path: profile
+          cors: true
+          authorizer: Auth
+          reqValidatorName: RequestBodyValidator
+          documentation:
+            summary: Update a profile
+            description: Update a profile
+            requestModels:
+              'application/json': UpdateProfileRequest
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+          - dynamodb:UpdateItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.PROFILE_TABLE}
+      - Effect: 'Allow'
+        Action:
+          - 'xray:PutTraceSegments'
+          - 'xray:PutTelemetryRecords'
+        Resource:
+          - '*'
 
   GetTodos:
     handler: src/lambda/http/getTodos.handler
@@ -166,6 +237,20 @@ functions:
 
 resources:
   Resources:
+    ProfileDynamoDBTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+        StreamSpecification:
+          StreamViewType: NEW_IMAGE
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:provider.environment.PROFILE_TABLE}
+
     TodosDynamoDBTable:
       Type: AWS::DynamoDB::Table
       Properties:
