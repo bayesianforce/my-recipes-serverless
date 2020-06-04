@@ -10,6 +10,7 @@ const logger = createLogger('Profile Access')
 export function profileAccessCreator() {
   const docClient = new XAWS.DynamoDB.DocumentClient()
   const profileTable = process.env.PROFILE_TABLE
+  const bucketName = process.env.IMAGES_S3_BUCKET
 
   async function getProfile(userId: string): Promise<ProfileItem> {
     logger.info('getProfile', { userId })
@@ -64,9 +65,28 @@ export function profileAccessCreator() {
     await docClient.update(params).promise()
   }
 
+  async function storeUploadUrl(
+    imageId: string,
+    userId: string
+  ): Promise<void> {
+    logger.info('storeUploadUrl', ` ${imageId} ${userId}`)
+
+    const params = {
+      TableName: profileTable,
+      Key: { userId },
+      UpdateExpression: 'set attachmentUrl=:attachmentUrl',
+      ExpressionAttributeValues: {
+        ':attachmentUrl': `https://${bucketName}.s3.amazonaws.com/${imageId}`
+      }
+    }
+
+    await docClient.update(params).promise()
+  }
+
   return {
     getProfile,
     createProfile,
-    updateProfile
+    updateProfile,
+    storeUploadUrl
   }
 }

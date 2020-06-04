@@ -101,7 +101,7 @@ export function todoAccessCreator() {
     imageId: string,
     todoId: string
   ): Promise<void> {
-    logger.info('generateUploadUrl', ` ${imageId} ${todoId}`)
+    logger.info('storeUploadUrl', ` ${imageId} ${todoId}`)
 
     const item = await getTodoById(todoId)
 

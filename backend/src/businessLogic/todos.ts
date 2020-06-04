@@ -17,11 +17,11 @@ export async function getTodos(jwtToken: string): Promise<TodoItem[]> {
 
 export async function createTodo(
   todo: CreateTodoRequest,
-  jwtToken: string
+  userId: string
 ): Promise<TodoItem> {
   const todoId = uuid.v4()
-  const userId = parseUserId(jwtToken)
   const createdAt = new Date().toISOString()
+
   const newItem = {
     userId,
     todoId,

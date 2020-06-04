@@ -115,6 +115,33 @@ functions:
         Resource:
           - '*'
 
+  GenerateAvatarUrl:
+    handler: src/lambda/http/generateAvatarUrl.handler
+    events:
+      - http:
+          method: post
+          path: profile/attachment
+          cors: true
+          authorizer: Auth
+          iamRoleStatements:
+            - Effect: Allow
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+          - dynamodb:UpdateItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.PROFILE_TABLE}
+      - Effect: Allow
+        Action:
+          - s3:PutObject
+        Resource: arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}/*
+      - Effect: 'Allow'
+        Action:
+          - 'xray:PutTraceSegments'
+          - 'xray:PutTelemetryRecords'
+        Resource:
+          - '*'
+
   GetTodos:
     handler: src/lambda/http/getTodos.handler
     events:
