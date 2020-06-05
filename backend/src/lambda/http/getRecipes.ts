@@ -2,24 +2,26 @@ import 'source-map-support/register'
 import * as middy from 'middy'
 import { cors } from 'middy/middlewares'
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
+import { getRecipes } from '../../businessLogic/recipes'
 import { createLogger } from '../../utils/logger'
-import { deleteTodo } from '../../businessLogic/todos'
 import { handleError } from '../utils'
 
-const logger = createLogger('Todo Delete request')
+const logger = createLogger('Recipe Get All request')
 
 export const handler = middy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-    logger.info('Processing event', event)
+    logger.info('Processing event: ', event)
 
-    const todoId = event.pathParameters.todoId
+    const authorization = event.headers.Authorization
+    const split = authorization.split(' ')
+    const jwtToken = split[1]
 
     try {
-      await deleteTodo(todoId)
+      const items = await getRecipes(jwtToken)
 
       return {
         statusCode: 200,
-        body: ''
+        body: JSON.stringify({ items })
       }
     } catch (e) {
       return handleError(e)

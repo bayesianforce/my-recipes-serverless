@@ -3,19 +3,19 @@ import * as middy from 'middy'
 import { cors } from 'middy/middlewares'
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import { createLogger } from '../../utils/logger'
-import { generateUploadUrl } from '../../businessLogic/todos'
+import { generateUploadUrl } from '../../businessLogic/recipes'
 import { handleError } from '../utils'
 
-const logger = createLogger('Todo Delete request')
+const logger = createLogger('Recipe Delete request')
 
 export const handler = middy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     logger.info('Processing event: ', event)
 
-    const todoId = event.pathParameters.todoId
+    const recipeId = event.pathParameters.recipeId
 
     try {
-      const uploadUrl = await generateUploadUrl(todoId)
+      const uploadUrl = await generateUploadUrl(recipeId)
 
       return {
         statusCode: 201,

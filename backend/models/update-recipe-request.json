@@ -1,18 +1,18 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "updateTodo",
+  "title": "updateRecipe",
   "type": "object",
   "properties": {
     "name": {
       "type": "string"
     },
-    "dueDate": {
-      "type": "string"
-    },
     "done": {
       "type": "boolean"
+    },
+    "description": {
+      "type": "string"
     }
   },
-  "required": ["name", "dueDate", "done"],
+  "required": ["name", "done"],
   "additionalProperties": false
 }

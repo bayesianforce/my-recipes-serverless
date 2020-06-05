@@ -30,7 +30,7 @@ export function profileAccessCreator() {
       }
     }
 
-    return result.Items[0]
+    return result.Items[0] as ProfileItem
   }
 
   async function createProfile(profile: ProfileItem): Promise<ProfileItem> {

@@ -1,5 +1,5 @@
 service:
-  name: vabar-sharing
+  name: vb-my-recipes
 
 plugins:
   - serverless-webpack
@@ -13,18 +13,18 @@ custom:
     api:
       info:
         version: v1.0.0
-        title: vabar App
+        title: My recipes
         description: Vabar application for sharing
     models:
       - name: UpdateProfileRequest
         contentType: application/json
         schema: ${file(models/update-profile-request.json)}
-      - name: CreateTodoRequest
+      - name: CreateRecipeRequest
         contentType: application/json
-        schema: ${file(models/create-todo-request.json)}
-      - name: UpdateTodoRequest
+        schema: ${file(models/create-recipe-request.json)}
+      - name: UpdateRecipeRequest
         contentType: application/json
-        schema: ${file(models/update-todo-request.json)}
+        schema: ${file(models/update-recipe-request.json)}
 
 provider:
   name: aws
@@ -38,9 +38,9 @@ provider:
     apiGateway: true
 
   environment:
-    PROFILE_TABLE: Vabar-profile-${self:provider.stage}
-    TODO_TABLE: Vabar-todo-${self:provider.stage}
-    IMAGES_S3_BUCKET: vabar-img-${self:provider.stage}
+    PROFILE_TABLE: vb-profile-${self:provider.stage}
+    RECIPE_TABLE: vb-recipe-${self:provider.stage}
+    IMAGES_S3_BUCKET: vb-recipe-img-${self:provider.stage}
     USER_ID_INDEX: UserIdIndex
     SIGNED_URL_EXPIRATION: 300
 
@@ -142,18 +142,18 @@ functions:
         Resource:
           - '*'
 
-  GetTodos:
-    handler: src/lambda/http/getTodos.handler
+  GetRecipes:
+    handler: src/lambda/http/getRecipes.handler
     events:
       - http:
           method: get
-          path: todos
+          path: recipes
           cors: true
     iamRoleStatements:
       - Effect: Allow
         Action:
           - dynamodb:Query
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODO_TABLE}/index/${self:provider.environment.USER_ID_INDEX}
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.RECIPE_TABLE}/index/${self:provider.environment.USER_ID_INDEX}
       - Effect: 'Allow'
         Action:
           - 'xray:PutTraceSegments'
@@ -161,25 +161,25 @@ functions:
         Resource:
           - '*'
 
-  CreateTodo:
-    handler: src/lambda/http/createTodo.handler
+  CreateRecipe:
+    handler: src/lambda/http/createRecipe.handler
     events:
       - http:
           method: post
-          path: todos
+          path: recipes
           cors: true
           authorizer: Auth
           reqValidatorName: RequestBodyValidator
           documentation:
-            summary: Create a new todo
-            description: Create a new todo
+            summary: Create a new recipe
+            description: Create a new recipe
             requestModels:
-              'application/json': CreateTodoRequest
+              'application/json': CreateRecipeRequest
     iamRoleStatements:
       - Effect: Allow
         Action:
           - dynamodb:PutItem
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODO_TABLE}
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.RECIPE_TABLE}
       - Effect: 'Allow'
         Action:
           - 'xray:PutTraceSegments'
@@ -187,26 +187,26 @@ functions:
         Resource:
           - '*'
 
-  UpdateTodo:
-    handler: src/lambda/http/updateTodo.handler
+  UpdateRecipe:
+    handler: src/lambda/http/updateRecipe.handler
     events:
       - http:
           method: patch
-          path: todos/{todoId}
+          path: recipes/{recipeId}
           cors: true
           authorizer: Auth
           reqValidatorName: RequestBodyValidator
           documentation:
-            summary: Update a new todo
-            description: Update a new todo
+            summary: Update a new recipe
+            description: Update a new recipe
             requestModels:
-              'application/json': UpdateTodoRequest
+              'application/json': UpdateRecipeRequest
     iamRoleStatements:
       - Effect: Allow
         Action:
           - dynamodb:Query
           - dynamodb:UpdateItem
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODO_TABLE}
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.RECIPE_TABLE}
       - Effect: 'Allow'
         Action:
           - 'xray:PutTraceSegments'
@@ -214,12 +214,12 @@ functions:
         Resource:
           - '*'
 
-  DeleteTodo:
-    handler: src/lambda/http/deleteTodo.handler
+  DeleteRecipe:
+    handler: src/lambda/http/deleteRecipe.handler
     events:
       - http:
           method: delete
-          path: todos/{todoId}
+          path: recipes/{recipeId}
           cors: true
           authorizer: Auth
     iamRoleStatements:
@@ -227,7 +227,7 @@ functions:
         Action:
           - dynamodb:Query
           - dynamodb:DeleteItem
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODO_TABLE}
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.RECIPE_TABLE}
       - Effect: 'Allow'
         Action:
           - 'xray:PutTraceSegments'
@@ -240,7 +240,7 @@ functions:
     events:
       - http:
           method: post
-          path: todos/{todoId}/attachment
+          path: recipes/{recipeId}/attachment
           cors: true
           authorizer: Auth
           iamRoleStatements:
@@ -250,7 +250,7 @@ functions:
         Action:
           - dynamodb:Query
           - dynamodb:UpdateItem
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODO_TABLE}
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.RECIPE_TABLE}
       - Effect: Allow
         Action:
           - s3:PutObject
@@ -278,23 +278,23 @@ resources:
         BillingMode: PAY_PER_REQUEST
         TableName: ${self:provider.environment.PROFILE_TABLE}
 
-    TodosDynamoDBTable:
+    RecipesDynamoDBTable:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
           - AttributeName: userId
             AttributeType: S
-          - AttributeName: todoId
+          - AttributeName: recipeId
             AttributeType: S
           - AttributeName: createdAt
             AttributeType: S
         KeySchema:
-          - AttributeName: todoId
+          - AttributeName: recipeId
             KeyType: HASH
           - AttributeName: createdAt
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST
-        TableName: ${self:provider.environment.TODO_TABLE}
+        TableName: ${self:provider.environment.RECIPE_TABLE}
         GlobalSecondaryIndexes:
           - IndexName: ${self:provider.environment.USER_ID_INDEX}
             KeySchema:

@@ -2,22 +2,22 @@ import 'source-map-support/register'
 import * as middy from 'middy'
 import { cors } from 'middy/middlewares'
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
-import { UpdateTodoRequest } from '../../requests/UpdateTodoRequest'
+import { UpdateRecipeRequest } from '../../requests/UpdateRecipeRequest'
 import { createLogger } from '../../utils/logger'
-import { updateTodo } from '../../businessLogic/todos'
+import { updateRecipe } from '../../businessLogic/recipes'
 import { handleError } from '../utils'
 
-const logger = createLogger('Todo Update request')
+const logger = createLogger('Recipe Update request')
 
 export const handler = middy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     logger.info('Processing event: ', event)
 
-    const todoId = event.pathParameters.todoId
-    const req = JSON.parse(event.body) as UpdateTodoRequest
+    const recipeId = event.pathParameters.recipeId
+    const req = JSON.parse(event.body) as UpdateRecipeRequest
 
     try {
-      await updateTodo(todoId, req)
+      await updateRecipe(recipeId, req)
 
       return {
         statusCode: 200,

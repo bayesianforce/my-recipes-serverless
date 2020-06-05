@@ -6,7 +6,7 @@ import { createLogger } from '../../utils/logger'
 import { handleError, getUserId } from '../utils'
 import { generateUploadUrl } from '../../businessLogic/profile'
 
-const logger = createLogger('Todo Delete request')
+const logger = createLogger('Recipe Delete request')
 
 export const handler = middy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
