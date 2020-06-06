@@ -14,8 +14,8 @@ export function recipeAccessCreator() {
   const userIdIndex = process.env.USER_ID_INDEX
   const bucketName = process.env.IMAGES_S3_BUCKET
 
-  async function getRecipeById(recipeId: string): Promise<RecipeItem> {
-    logger.info('getRecipeById', { recipeId })
+  async function getRecipe(recipeId: string): Promise<RecipeItem> {
+    logger.info('getRecipe', { recipeId })
 
     const params = {
       TableName: recipeTable,
@@ -73,7 +73,7 @@ export function recipeAccessCreator() {
   ): Promise<void> {
     logger.info('updateRecipe', `${recipeId} - ${recipe}`)
 
-    const item = await getRecipeById(recipeId)
+    const item = await getRecipe(recipeId)
 
     const params = {
       TableName: recipeTable,
@@ -92,7 +92,7 @@ export function recipeAccessCreator() {
   async function deleteRecipe(recipeId: string) {
     logger.info('deleteRecipe', recipeId)
 
-    const item = await getRecipeById(recipeId)
+    const item = await getRecipe(recipeId)
 
     const params = {
       TableName: recipeTable,
@@ -108,7 +108,7 @@ export function recipeAccessCreator() {
   ): Promise<void> {
     logger.info('storeUploadUrl', ` ${imageId} ${recipeId}`)
 
-    const item = await getRecipeById(recipeId)
+    const item = await getRecipe(recipeId)
 
     const params1 = {
       TableName: recipeTable,
@@ -124,6 +124,7 @@ export function recipeAccessCreator() {
 
   return {
     getRecipes,
+    getRecipe,
     createRecipe,
     updateRecipe,
     deleteRecipe,

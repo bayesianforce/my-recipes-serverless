@@ -15,6 +15,10 @@ export async function getRecipes(jwtToken: string): Promise<RecipeItem[]> {
   return RecipeAccess.getRecipes(userId)
 }
 
+export async function getRecipe(recipeId: string): Promise<RecipeItem> {
+  return RecipeAccess.getRecipe(recipeId)
+}
+
 export async function createRecipe(
   recipe: CreateRecipeRequest,
   userId: string

@@ -170,6 +170,25 @@ functions:
         Resource:
           - '*'
 
+  GetRecipe:
+    handler: src/lambda/http/getRecipe.handler
+    events:
+      - http:
+          method: get
+          path: recipes/{recipeId}
+          cors: true
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.RECIPE_TABLE}
+      - Effect: 'Allow'
+        Action:
+          - 'xray:PutTraceSegments'
+          - 'xray:PutTelemetryRecords'
+        Resource:
+          - '*'
+
   CreateRecipe:
     handler: src/lambda/http/createRecipe.handler
     events:
