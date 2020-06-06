@@ -1,44 +1,55 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# My recipes
 
-## Available Scripts
+This App is realized as capstone project of Udacity Cloud Developer Nanodegree. It uses Serverless framework with AWS services for the backend and React for the frontend.
 
-In the project directory, you can run:
+# Functionality
 
-### `npm start`
+This application allow the authenticated user to build a profile and track a list of personal recipes:
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- customize a profile including the avatar
+- consult a list of personal recipes
+- create/edit/delete recipes and uploading images
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+# How to run the application
 
-### `npm test`
+## Backend
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+cd backend
+npm install
+sls deploy -v
+```
 
-### `npm run build`
+## Client
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To run a client application run the following commands:
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+```
+cd client
+npm install
+npm run start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Postman collection
 
-### `npm run eject`
+An alternative way to test your API, you can use the Postman collection that contains sample requests. You can find a Postman collection in this project. To import this collection, do the following.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Click on the import button:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![Alt text](images/import-collection-1.png?raw=true 'Image 1')
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Click on the "Choose Files":
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+![Alt text](images/import-collection-2.png?raw=true 'Image 2')
 
-## Learn More
+Select a file to import:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![Alt text](images/import-collection-3.png?raw=true 'Image 3')
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Right click on the imported collection to set variables for the collection:
+
+![Alt text](images/import-collection-4.png?raw=true 'Image 4')
+
+Provide variables for the collection (similarly to how this was done in the course):
+
+![Alt text](images/import-collection-5.png?raw=true 'Image 5')

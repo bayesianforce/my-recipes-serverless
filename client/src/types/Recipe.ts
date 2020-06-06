@@ -1,8 +1,8 @@
-export interface Todo {
-  todoId: string
+export interface Recipe {
+  recipeId: string
   createdAt: string
   name: string
-  dueDate: string
+  description: string
   done: boolean
   attachmentUrl?: string
 }
