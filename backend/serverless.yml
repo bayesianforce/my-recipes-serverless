@@ -8,7 +8,13 @@ plugins:
   - serverless-aws-documentation
   - serverless-plugin-canary-deployments
 
+package:
+  individually: true
+
 custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
   documentation:
     api:
       info:
@@ -36,6 +42,9 @@ provider:
   tracing:
     lambda: true
     apiGateway: true
+
+  apiGateway:
+    minimumCompressionSize: 1024
 
   environment:
     PROFILE_TABLE: vb-profile-${self:provider.stage}
