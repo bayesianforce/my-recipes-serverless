@@ -1,259 +1,430 @@
 {
-	"info": {
-		"_postman_id": "d0700d24-79ec-487e-8403-b565bef7f8e0",
-		"name": "Udacity C4 Project",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "TODOs",
-			"item": [
-				{
-					"name": "Get all todos",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos",
-							"protocol": "https",
-							"host": [
-								"{{apiId}}",
-								"execute-api",
-								"us-east-1",
-								"amazonaws",
-								"com"
-							],
-							"path": [
-								"dev",
-								"todos"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create todo",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Water flowers\",\n\t\"dueDate\": \"2019-06-11\"\n}"
-						},
-						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos",
-							"protocol": "https",
-							"host": [
-								"{{apiId}}",
-								"execute-api",
-								"us-east-1",
-								"amazonaws",
-								"com"
-							],
-							"path": [
-								"dev",
-								"todos"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update todo",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "Bearer {{authToken}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Change the world\",\n\t\"dueDate\": \"2019-12-11\",\n\t\"done\": true\n}"
-						},
-						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos/35dd600f-43c2-4649-903c-615e1586a26f",
-							"protocol": "https",
-							"host": [
-								"{{apiId}}",
-								"execute-api",
-								"us-east-1",
-								"amazonaws",
-								"com"
-							],
-							"path": [
-								"dev",
-								"todos",
-								"35dd600f-43c2-4649-903c-615e1586a26f"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete todo",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "Bearer {{authToken}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos/fe671583-4512-45f6-9475-4265c04362fb",
-							"protocol": "https",
-							"host": [
-								"{{apiId}}",
-								"execute-api",
-								"us-east-1",
-								"amazonaws",
-								"com"
-							],
-							"path": [
-								"dev",
-								"todos",
-								"fe671583-4512-45f6-9475-4265c04362fb"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get attachment URL",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{authToken}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos/3836b777-9bc4-4429-9b79-ba4e4f5f91c0/attachment",
-							"protocol": "https",
-							"host": [
-								"{{apiId}}",
-								"execute-api",
-								"us-east-1",
-								"amazonaws",
-								"com"
-							],
-							"path": [
-								"dev",
-								"todos",
-								"3836b777-9bc4-4429-9b79-ba4e4f5f91c0",
-								"attachment"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "ce2b42d4-8cc5-4f30-a6ed-e7f0f303c3fd",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"id": "efb16c49-3866-4241-97d1-360ad72736d8",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				}
-			]
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"id": "2e83c0fe-6650-44d5-a90f-4c27ff720d83",
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"id": "977c227e-2df3-42eb-9a48-ec25e2f7eeae",
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"id": "bf208e6b-f66d-4008-9366-dd541ff65425",
-			"key": "apiId",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"id": "9bc6399a-d2bb-4f2d-9ffa-8480370d383c",
-			"key": "authToken",
-			"value": "",
-			"type": "string"
-		}
-	]
+  "info": {
+    "_postman_id": "00d3e2fc-6a43-49b7-a466-d7b6eaab3fa8",
+    "name": "My recipes",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Apis",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/profile",
+              "protocol": "https",
+              "host": [
+                "{{apiId}}",
+                "execute-api",
+                "us-east-1",
+                "amazonaws",
+                "com"
+              ],
+              "path": ["dev", "profile"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create profile",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/profile",
+              "protocol": "https",
+              "host": [
+                "{{apiId}}",
+                "execute-api",
+                "us-east-1",
+                "amazonaws",
+                "com"
+              ],
+              "path": ["dev", "profile"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "type": "text",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "type": "text",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"name\": \"valerio\",\n\t\"isComplete\": true\n}"
+            },
+            "url": {
+              "raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/profile/",
+              "protocol": "https",
+              "host": [
+                "{{apiId}}",
+                "execute-api",
+                "us-east-1",
+                "amazonaws",
+                "com"
+              ],
+              "path": ["dev", "profile", "35dd600f-43c2-4649-903c-615e1586a26f"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get recipes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/recipes",
+              "protocol": "https",
+              "host": [
+                "{{apiId}}",
+                "execute-api",
+                "us-east-1",
+                "amazonaws",
+                "com"
+              ],
+              "path": ["dev", "recipes"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get recipe",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/recipes/35dd600f-43c2-4649-903c-615e1586a26f",
+              "protocol": "https",
+              "host": [
+                "{{apiId}}",
+                "execute-api",
+                "us-east-1",
+                "amazonaws",
+                "com"
+              ],
+              "path": ["dev", "recipes", "35dd600f-43c2-4649-903c-615e1586a26f"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update recipe",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "type": "text",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "type": "text",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"name\": \"Change the world\",\n\t\"description\": \"2019-12-11\",\n\t\"done\": true\n}"
+            },
+            "url": {
+              "raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/recipes/35dd600f-43c2-4649-903c-615e1586a26f",
+              "protocol": "https",
+              "host": [
+                "{{apiId}}",
+                "execute-api",
+                "us-east-1",
+                "amazonaws",
+                "com"
+              ],
+              "path": ["dev", "recipes", "35dd600f-43c2-4649-903c-615e1586a26f"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create recipe",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"name\": \"Water flowers\"\n}"
+            },
+            "url": {
+              "raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/recipes",
+              "protocol": "https",
+              "host": [
+                "{{apiId}}",
+                "execute-api",
+                "us-east-1",
+                "amazonaws",
+                "com"
+              ],
+              "path": ["dev", "recipes"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update recipe",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "type": "text",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "type": "text",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"name\": \"Change the world\",\n\t\"dueDate\": \"2019-12-11\",\n\t\"done\": true\n}"
+            },
+            "url": {
+              "raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/recipes/35dd600f-43c2-4649-903c-615e1586a26f",
+              "protocol": "https",
+              "host": [
+                "{{apiId}}",
+                "execute-api",
+                "us-east-1",
+                "amazonaws",
+                "com"
+              ],
+              "path": ["dev", "recipes", "35dd600f-43c2-4649-903c-615e1586a26f"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete recipe",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "type": "text",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "type": "text",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/recipes/fe671583-4512-45f6-9475-4265c04362fb",
+              "protocol": "https",
+              "host": [
+                "{{apiId}}",
+                "execute-api",
+                "us-east-1",
+                "amazonaws",
+                "com"
+              ],
+              "path": ["dev", "recipes", "fe671583-4512-45f6-9475-4265c04362fb"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get avatar URL",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/profile/3836b777-9bc4-4429-9b79-ba4e4f5f91c0/attachment",
+              "protocol": "https",
+              "host": [
+                "{{apiId}}",
+                "execute-api",
+                "us-east-1",
+                "amazonaws",
+                "com"
+              ],
+              "path": [
+                "dev",
+                "profile",
+                "3836b777-9bc4-4429-9b79-ba4e4f5f91c0",
+                "attachment"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get attachment URL",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/recipes/3836b777-9bc4-4429-9b79-ba4e4f5f91c0/attachment",
+              "protocol": "https",
+              "host": [
+                "{{apiId}}",
+                "execute-api",
+                "us-east-1",
+                "amazonaws",
+                "com"
+              ],
+              "path": [
+                "dev",
+                "recipes",
+                "3836b777-9bc4-4429-9b79-ba4e4f5f91c0",
+                "attachment"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "c97f2c59-02de-4673-a6df-cc785b1eb151",
+            "type": "text/javascript",
+            "exec": [""]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "id": "ebedaef8-1228-4e19-b46a-8f2b496532c6",
+            "type": "text/javascript",
+            "exec": [""]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {}
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "71045c00-d341-4dfc-bb33-c10d384492a9",
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "76e908f1-1219-4aec-aea3-2cc23100aaf2",
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "id": "277bb4f6-dd80-4b40-bec8-5d102ee5b361",
+      "key": "apiId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "id": "da6455dd-3ae9-41f3-a334-8e1fe0ac7f31",
+      "key": "authToken",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "protocolProfileBehavior": {}
 }
